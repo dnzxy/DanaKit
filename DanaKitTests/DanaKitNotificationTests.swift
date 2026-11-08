@@ -19,4 +19,12 @@ struct DanaKitNotificationTests {
 
         #expect(identifiers == expected)
     }
+
+    @Test func issuableAlertsMatchIssuedAlerts() {
+        for notification in DanaKitNotification.issuable {
+            #expect(notification.issuableAlert.identifier == notification.alert.identifier.alertIdentifier)
+            #expect(notification.issuableAlert.interruptionLevel == notification.alert.interruptionLevel)
+        }
+        #expect(DanaKitPumpManager.issuableAlerts.count == PumpManagerAlert.issuable.count + DanaKitNotification.issuable.count)
+    }
 }

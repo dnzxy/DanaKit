@@ -18,6 +18,51 @@ public enum PumpManagerAlert: Hashable, Codable {
     case ble5InvalidKeys(_ deviceName: String)
     case unknown(_ raw: Data?)
 
+    // Every alert DanaKitPumpManager issues (ble5InvalidKeys is never issued); payloads don't affect identifier, level or title.
+    static let issuable: [PumpManagerAlert] = [
+        .batteryZeroPercent(Data()),
+        .pumpError(Data()),
+        .occlusion(Data()),
+        .lowBattery(Data()),
+        .shutdown(Data()),
+        .basalCompare(Data()),
+        .bloodSugarMeasure(Data()),
+        .remainingInsulinLevel(Data()),
+        .emptyReservoir(Data()),
+        .checkShaft(Data()),
+        .basalMax(Data()),
+        .dailyMax(Data()),
+        .bloodSugarCheckMiss(Data()),
+        .unknown(nil)
+    ]
+
+    var interruptionLevel: Alert.InterruptionLevel {
+        switch self {
+        case .batteryZeroPercent,
+             .checkShaft,
+             .emptyReservoir,
+             .occlusion,
+             .pumpError,
+             .shutdown:
+            return .critical
+        case .ble5InvalidKeys,
+             .lowBattery,
+             .remainingInsulinLevel,
+             .unknown:
+            return .timeSensitive
+        case .basalCompare,
+             .basalMax,
+             .bloodSugarCheckMiss,
+             .bloodSugarMeasure,
+             .dailyMax:
+            return .active
+        }
+    }
+
+    var issuableAlert: IssuableAlert {
+        IssuableAlert(identifier: identifier, interruptionLevel: interruptionLevel, title: contentTitle)
+    }
+
     var contentTitle: String {
         switch self {
         case .batteryZeroPercent:

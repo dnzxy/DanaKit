@@ -12,7 +12,18 @@ enum DanaKitNotification {
             foregroundContent: content,
             backgroundContent: content,
             trigger: trigger,
+            interruptionLevel: interruptionLevel,
         )
+    }
+
+    static let issuable: [DanaKitNotification] = [.disconnectWarning, .disconnectedReminder(after: 0)]
+
+    var issuableAlert: IssuableAlert {
+        IssuableAlert(identifier: alertIdentifier, interruptionLevel: interruptionLevel, title: alertContent.title)
+    }
+
+    var interruptionLevel: Alert.InterruptionLevel {
+        .timeSensitive
     }
 
     private static let managerIdentifier = "Dana"
