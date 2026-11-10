@@ -19,7 +19,7 @@ public enum PumpManagerAlert: Hashable, Codable {
     case unknown(_ raw: Data?)
 
     // Every alert DanaKitPumpManager issues (ble5InvalidKeys is never issued); payloads don't affect identifier, level or title.
-    static let issuable: [PumpManagerAlert] = [
+    static let cataloged: [PumpManagerAlert] = [
         .batteryZeroPercent(Data()),
         .pumpError(Data()),
         .occlusion(Data()),
@@ -59,8 +59,8 @@ public enum PumpManagerAlert: Hashable, Codable {
         }
     }
 
-    var issuableAlert: IssuableAlert {
-        IssuableAlert(identifier: identifier, interruptionLevel: interruptionLevel, title: contentTitle)
+    var catalogEntry: AlertCatalogEntry {
+        AlertCatalogEntry(identifier: identifier, interruptionLevel: interruptionLevel, title: contentTitle)
     }
 
     var contentTitle: String {

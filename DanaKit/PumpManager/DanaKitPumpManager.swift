@@ -1416,8 +1416,8 @@ extension DanaKitPumpManager: AlertSoundVendor {
 }
 
 public extension DanaKitPumpManager {
-    static var issuableAlerts: [IssuableAlert] {
-        PumpManagerAlert.issuable.map(\.issuableAlert) + DanaKitNotification.issuable.map(\.issuableAlert)
+    static var alertCatalog: [AlertCatalogEntry] {
+        PumpManagerAlert.cataloged.map(\.catalogEntry) + DanaKitNotification.cataloged.map(\.catalogEntry)
     }
 
     func acknowledgeAlert(alertIdentifier _: LoopKit.Alert.AlertIdentifier) async throws {}

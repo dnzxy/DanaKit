@@ -16,10 +16,10 @@ enum DanaKitNotification {
         )
     }
 
-    static let issuable: [DanaKitNotification] = [.disconnectWarning, .disconnectedReminder(after: 0)]
+    static let cataloged: [DanaKitNotification] = [.disconnectWarning, .disconnectedReminder(after: 0)]
 
-    var issuableAlert: IssuableAlert {
-        IssuableAlert(identifier: alertIdentifier, interruptionLevel: interruptionLevel, title: alertContent.title)
+    var catalogEntry: AlertCatalogEntry {
+        AlertCatalogEntry(identifier: alertIdentifier, interruptionLevel: interruptionLevel, title: alertContent.title)
     }
 
     var interruptionLevel: Alert.InterruptionLevel {
